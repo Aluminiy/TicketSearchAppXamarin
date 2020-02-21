@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:DetailsViewModel"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:viewModels="clr-namespace:TicketSearchApp.Core.ViewModels;assembly=TicketSearchApp.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:TicketSearchApp.Converters"
+    mc:Ignorable="d"
+    Title="{Binding Airport.Name}"
+    x:Class="TicketSearchApp.TicketInfoPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout IsVisible="{Binding IsResultVisible}">
+                <ListView x:Name="FlightsListView" HasUnevenRows="True" SelectionMode="None" ItemsSource="{Binding Flights}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="Departure: " />
+                                        <Label mvx:Bi.nd="Text DepartDate" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                        <Label Text="Return: " />
+                                        <Label mvx:Bi.nd="Text ReturnDate" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="2">
+                                        <Label Text="Price: " />
+                                        <Label mvx:Bi.nd="Text Price" />
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout x:Name="EmptyLayout" IsVisible="{Binding IsEmptyVisible}" VerticalOptions="FillAndExpand">
+                <Label Text="No flights found" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout x:Name="LoadingLayout" IsVisible="{Binding IsLoading}" VerticalOptions="FillAndExpand">
+                <ActivityIndicator IsRunning="True" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>

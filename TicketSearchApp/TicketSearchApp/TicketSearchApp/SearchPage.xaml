@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage x:TypeArguments="viewModels:SearchViewModel"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:viewModels="clr-namespace:TicketSearchApp.Core.ViewModels;assembly=TicketSearchApp.Core"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:TicketSearchApp.Converters"
+    mc:Ignorable="d"
+    Title="Search page"
+    x:Class="TicketSearchApp.SearchPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout x:Name="SearchLayout" Margin="20">
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <StackLayout HorizontalOptions="FillAndExpand" >
+                        <Label Text="Input IATA:"/>
+                        <Entry Placeholder="IATA" HorizontalOptions="Fill" mvx:Bi.nd="Text Iata" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="End">
+                        <Label Text="Select date:" />
+                        <DatePicker Date="{Binding DateTime}" />
+                    </StackLayout>
+                </StackLayout>
+                <Button x:Name="SearchButton" Text="Search" mvx:Bi.nd="Command SearchCommand" />
+            </StackLayout>
+            <StackLayout x:Name="ResultLayout" IsVisible="{Binding IsResultVisible}" VerticalOptions="FillAndExpand">
+                <maps:Map x:Name="map" HorizontalOptions="FillAndExpand"  HeightRequest="200" ItemsSource="{Binding Pins}">
+                    <maps:Map.ItemTemplate>
+                        <DataTemplate>
+                            <maps:Pin Position="{Binding Position}" Label="{Binding Label}" Type="Place" />
+                        </DataTemplate>
+                    </maps:Map.ItemTemplate>
+                </maps:Map>
+                <ListView mvx:Bi.nd="ItemsSource Airports"  ItemTapped="ListView_ItemTapped" HasUnevenRows="True" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="IATA: " />
+                                        <Label mvx:Bi.nd="Text Iata" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                        <Label Text="Name: " />
+                                        <Label mvx:Bi.nd="Text Name" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="2">
+                                        <Label Text="Country: " />
+                                        <Label mvx:Bi.nd="Text Country" />
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout x:Name="EmptyLayout" IsVisible="{Binding IsEmptyVisible}" VerticalOptions="FillAndExpand">
+                <Label Text="No airports found" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout x:Name="LoadingLayout" IsVisible="{Binding IsLoading}" VerticalOptions="FillAndExpand">
+                <ActivityIndicator IsRunning="True" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</views:MvxContentPage>
