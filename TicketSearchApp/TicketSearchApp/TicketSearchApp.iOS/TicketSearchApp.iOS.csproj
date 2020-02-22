@@ -26,6 +26,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -138,7 +139,7 @@
       <Name>TicketSearchApp.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TicketSearchApp\TicketSearchApp.csproj">
-      <Project>{CB38076E-B7F3-4C38-931C-84831BE5922A}</Project>
+      <Project>{01013B52-4AF1-4E92-9CBE-1A0458392CDE}</Project>
       <Name>TicketSearchApp</Name>
     </ProjectReference>
   </ItemGroup>
